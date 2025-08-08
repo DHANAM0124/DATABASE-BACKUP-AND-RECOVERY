@@ -1,42 +1,24 @@
 # DATABASE-BACKUP-AND-RECOVERY
 
-1. MySQL BACKUP SCRIPT (using mysqldump)
-# Full backup of the database (schema + data)
-mysqldump -u root -p example_db > example_db_backup.sql
+CODTECH IT SOLUTIONS PVT.LTD
 
-2. MySQL RESTORE SCRIPT
-# First, recreate the database (if it was lost)
-mysql -u root -p -e "CREATE DATABASE example_db;"
+Dhana Packiyam M
 
-# Then restore the backup
-mysql -u root -p example_db < example_db_backup.sql
+CT04DH2476
 
- 3. PostgreSQL BACKUP SCRIPT (using pg_dump)
-# Full backup of the PostgreSQL database
-pg_dump -U postgres -d example_db -F c -f example_db_backup.pgcustom
+Neela Santhosh Kumar
 
-PostgreSQL RESTORE SCRIPT (using pg_restore)
-# Recreate the database
-createdb -U postgres example_db
+The purpose of this task is to demonstrate a complete process for backing up a database and restoring it in the event of failure. This is one of the most essential responsibilities in data management, as databases contain critical information that organizations rely on for daily operations. A successful backup and recovery process ensures that data is not lost due to unexpected issues such as hardware malfunctions, system crashes, human errors, or cyberattacks.
 
-# Restore the backup
-pg_restore -U postgres -d example_db example_db_backup.pgcustom
+For this task, we use a sample relational database consisting of two tables: Customers and Orders. These two tables are logically connected — the Orders table references the Customers table through a foreign key. This relationship emphasizes the need not only to back up the data but also to preserve the structural and relational integrity of the database throughout the recovery process.
 
-Simulating Failure
--- MySQL
-DROP DATABASE example_db;
+The process begins by creating a backup of the existing database. This backup must include both the schema (the structure of the database, including tables, columns, data types, and constraints) and the data itself (the actual records stored in the tables). A proper backup strategy ensures that both components are captured so the database can be fully reconstructed in the future.
 
--- PostgreSQL
-DROP DATABASE example_db;
+Once the backup is created and stored in a secure location, the next phase involves simulating a failure scenario. This is typically done by intentionally removing or corrupting the database to mimic real-world situations where the database is accidentally deleted, becomes unreadable, or suffers from data corruption.
 
- Verification After Recovery
- SELECT COUNT(*) FROM Customers;
-SELECT COUNT(*) FROM Orders;
+Following this simulated failure, the database must be restored from the backup. This restoration process involves creating a new database and re-importing the previously saved schema and data. During this process, it is crucial to ensure that all primary keys, foreign keys, and other constraints are reestablished correctly. This step is particularly important in our example, as the Orders table depends on a valid CustomerID from the Customers table.
 
-Sample data check:
-SELECT * FROM Customers WHERE CustomerID = 1;
+Once the restoration is complete, it is necessary to verify the integrity of the recovered database. This involves checking whether the data is complete, accurate, and consistent with the original state. Verification can include comparing record counts, reviewing sample data, and ensuring that relationships between tables are intact. For example, one would check that all orders are still linked to valid customers and that no data has been lost or duplicated during the process.
 
-Check relationships and foreign keys:
-SELECT * FROM Orders WHERE CustomerID NOT IN (SELECT CustomerID FROM Customers);
-
+To summarize, this task showcases the full lifecycle of database backup and recovery using a simple but realistic example. It highlights the importance of planning and maintaining regular backups and being prepared to restore databases efficiently in case of failure. A successful outcome is defined by the ability to fully recover both data and structure without losing relationships or violating data integrity. This is an essential practice in any system where data reliability, consistency, and continuity are critical.
 
